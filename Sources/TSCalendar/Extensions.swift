@@ -1,6 +1,18 @@
 import Foundation
 
 extension Date {
+    static func from(year: Int, month: Int, day: Int) -> Date {
+        let gregorianCalendar = NSCalendar(calendarIdentifier: .gregorian)!
+
+        var dateComponents = DateComponents()
+        dateComponents.year = year
+        dateComponents.month = month
+        dateComponents.day = day
+
+        let date = gregorianCalendar.date(from: dateComponents)!
+        return date
+    }
+    
     var day: Int {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month, .day], from: self)
@@ -17,6 +29,10 @@ extension Date {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month, .day], from: self)
         return components.year ?? 0
+    }
+    
+    var weekDay: Int {
+        Calendar.current.component(.weekday, from: self)
     }
     
     func startOfMonth() -> Date {

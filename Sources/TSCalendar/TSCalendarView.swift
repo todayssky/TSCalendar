@@ -22,6 +22,10 @@ struct TSCalendarView: View {
         "Sat"
     ]
     
+    var onTapCell: (Int) -> () =  { day in
+        
+    }
+    
     var body: some View {
         VStack(spacing: 6) {
             HStack {
@@ -35,7 +39,7 @@ struct TSCalendarView: View {
     }
     
     private var calendarGridView: some View {
-        VStack(spacing: 0) {
+        return VStack(spacing: 0) {
             LazyVGrid(
                 columns: Array(
                     repeating: GridItem(spacing: 0),
@@ -43,15 +47,20 @@ struct TSCalendarView: View {
                 ),
                 spacing: 0
             ) {
+                
                 ForEach(1 ..< 36, id: \.self) { day in
+                    let realDay = day - date.firstWeekdayOfMonth() + 1
                     CellView(
-                        day: day - date.firstWeekdayOfMonth() + 1,
+                        day: realDay,
                         date: date,
                         minHeight: minHeight
                     ) {
-                        if let view = dayViews[day - date.firstWeekdayOfMonth() + 1] {
+                        if let view = dayViews[realDay] {
                             view
                         }
+                    }
+                    .onTapGesture {
+                        onTapCell(realDay)
                     }
                 }
             }
@@ -66,17 +75,41 @@ struct CellView<Content: View>: View {
     var minHeight: CGFloat
     @ViewBuilder let content: Content
     var body: some View {
-        VStack(spacing: 0) {
-            HStack {
+
+        ZStack {
+            Color.white
+            VStack(spacing: 0) {
+                HStack {
+                    Spacer()
+                    Text(day < 1 || day > date.endOfMonth().day ? "": "\(day)")
+                        .foregroundColor(
+                            getDayColor(date: Date.from(
+                                year: date.year,
+                                month: date.month,
+                                day: day
+                            ))
+                        )
+                        .padding(8)
+                }
+                content
+                .padding(8)
                 Spacer()
-                Text(day < 1 || day > date.endOfMonth().day ? "": "\(day)")
-                    .padding(8)
             }
-            content
-            .padding(8)
         }
         .frame(maxWidth: .infinity, minHeight: minHeight, maxHeight: .infinity, alignment: .topTrailing)
         .border(Color.gray, width: 1)
+    }
+    
+    func getDayColor(date: Date) -> Color {
+        var dayColor: Color = Color.black
+        let weekDay = date.weekDay
+        if (weekDay == 1) {
+            dayColor = Color.red
+        } else if (weekDay == 7) {
+            dayColor = Color.blue
+        }
+        
+        return dayColor
     }
 }
 
@@ -112,7 +145,10 @@ struct TSCalendarView_Previews: PreviewProvider {
                         "木曜日",
                         "金曜日",
                         "土曜日",
-                    ]
+                    ],
+                    onTapCell: { day in
+                        print(day)
+                    }
                 )
                     .padding(20)
             }
