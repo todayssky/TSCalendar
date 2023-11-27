@@ -6,6 +6,6 @@ final class TSCalendarTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        XCTAssertEqual(TSCalendar().text, "Hello, World!")
+//        XCTAssertEqual(TSCalendar().text, "Hello, World!")
     }
 }

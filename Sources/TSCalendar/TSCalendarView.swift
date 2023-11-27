@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TSCalendarView: View {
+public struct TSCalendarView: View {
     @Binding var date: Date
     
     let minHeight: CGFloat
@@ -26,7 +26,7 @@ struct TSCalendarView: View {
         
     }
     
-    var body: some View {
+    public var body: some View {
         VStack(spacing: 6) {
             HStack {
                 ForEach(weekStrings, id: \.self) { week in
