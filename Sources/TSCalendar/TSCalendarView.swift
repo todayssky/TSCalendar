@@ -8,8 +8,7 @@
 import SwiftUI
 
 public struct TSCalendarView: View {
-    @Binding var date: Date
-    
+    let date: Date
     let minHeight: CGFloat
     var dayViews: [Int: AnyView] = [:]
     var weekStrings: [String] = [
@@ -21,9 +20,16 @@ public struct TSCalendarView: View {
         "Fri",
         "Sat"
     ]
-    
     var onTapCell: (Int) -> () =  { day in
         
+    }
+    
+    public init(date: Date, minHeight: CGFloat, dayViews: [Int : AnyView], weekStrings: [String], onTapCell: @escaping (Int) -> Void) {
+        self.date = date
+        self.minHeight = minHeight
+        self.dayViews = dayViews
+        self.weekStrings = weekStrings
+        self.onTapCell = onTapCell
     }
     
     public var body: some View {
@@ -134,7 +140,7 @@ struct TSCalendarView_Previews: PreviewProvider {
                 }
                 .font(.title)
                 TSCalendarView(
-                    date: $date,
+                    date: date,
                     minHeight: 100,
                     dayViews: mock,
                     weekStrings: [
