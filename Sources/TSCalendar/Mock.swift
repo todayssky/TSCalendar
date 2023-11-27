@@ -17,6 +17,10 @@ let mock: [Int: AnyView] = [
             MockView(timeString: "18:00", name: "Kim")
         }
     ),
+    9: AnyView(
+        Text("Holiday!")
+            .foregroundColor(.red)
+    ),
     12: AnyView(
         VStack(spacing: 10) {
             MockView(timeString: "10:00", name: "Daniel")

@@ -7,16 +7,29 @@
 
 import SwiftUI
 
-
-
 struct TSCalendarView: View {
     @Binding var date: Date
     
     let minHeight: CGFloat
     var dayViews: [Int: AnyView] = [:]
+    var weekStrings: [String] = [
+        "Sun",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat"
+    ]
     
     var body: some View {
-        VStack {
+        VStack(spacing: 6) {
+            HStack {
+                ForEach(weekStrings, id: \.self) { week in
+                    Text(week)
+                        .frame(maxWidth: .infinity)
+                }
+            }
             calendarGridView
         }
     }
@@ -87,7 +100,20 @@ struct TSCalendarView_Previews: PreviewProvider {
                     }
                 }
                 .font(.title)
-                TSCalendarView(date: $date, minHeight: 100, dayViews: mock)
+                TSCalendarView(
+                    date: $date,
+                    minHeight: 100,
+                    dayViews: mock,
+                    weekStrings: [
+                        "日曜日",
+                        "月曜日",
+                        "火曜日",
+                        "水曜日",
+                        "木曜日",
+                        "金曜日",
+                        "土曜日",
+                    ]
+                )
                     .padding(20)
             }
         }
