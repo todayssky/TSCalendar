@@ -54,7 +54,7 @@ public struct TSCalendarView: View {
                 spacing: 0
             ) {
                 
-                ForEach(1 ..< 36, id: \.self) { day in
+                ForEach(1 ..< 43, id: \.self) { day in
                     let realDay = day - date.firstWeekdayOfMonth() + 1
                     CellView(
                         day: realDay,
